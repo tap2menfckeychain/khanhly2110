@@ -1,0 +1,128 @@
+HƯỚNG DẪN SỬ DỤNG TRANG KỶ NIỆM IDOL — NHẠC "GIỜ THÌ"
+=======================================================
+
+Thư mục gồm:
+  index.html      – trang web (mở file này để xem)
+  data.js         – toàn bộ chữ trên trang, tên idol, chú thích ảnh  ← sửa file này
+  anh/            – 12 ảnh idol (01.jpg … 12.jpg), đã nén nhẹ cho điện thoại
+  nhac/           – nhạc nền gio-thi.mp3 (phát lặp lại)
+  fonts/          – font Cambria và UTM Zirkon nhúng sẵn, điện thoại nào cũng hiện đúng font
+  loi-bai-hat.js  – để trống là được (trang tự tải lời, xem mục 4)
+  quan-ly.html    – trang để KHÁCH TỰ TẢI ẢNH lên sau này (xem mục 6, 7)
+  apps-script.gs  – code kho ảnh, dán vào Google Sheet của bạn (xem mục 6)
+  style.css, script.js, quan-ly.js – giao diện & hiệu ứng (không cần sửa)
+
+Sửa data.js bằng Notepad (chuột phải → Open with → Notepad), sửa xong nhớ Lưu (Ctrl+S).
+
+
+1. TRANG CHẠY THẾ NÀO
+---------------------
+• Mở trang: nhạc tự phát và hộp quà tự mở ra. Nếu trình duyệt chặn tự phát (điện thoại thường chặn),
+  hộp quà hiện chữ "CHẠM ĐỂ MỞ" — chạm một lần là quà mở, nhạc vang lên.
+  (Điện thoại không cho trang nào phát tiếng trước khi người xem chạm màn hình — đây là luật của trình duyệt.)
+• Sau đó là trang cuộn: đầu trang → dải chữ chạy → 01 Câu chuyện → Khoảnh khắc đáng nhớ
+  → 02 Kỷ niệm (12 ảnh, chạm ảnh để xem lớn, vuốt để chuyển ảnh) → Cuộn phim → 03 Lời nhắn → Hẹn gặp lại.
+  Cuộn tới đâu chữ và ảnh hiện ra tới đó.
+• Lời bài hát tự chạy theo nhạc ở mép dưới màn hình: từng chữ bay vào từ mép phải, sáng dần
+  theo giọng hát, hát xong thì tung bay lên. Nút "Lời" ở góc trên để ẩn/hiện lời.
+• Nút đĩa nhạc góc trên bên phải: dừng / phát nhạc; vòng hồng quanh đĩa và vạch ở mép phải
+  cho biết bài hát đang chạy tới đâu.
+
+
+2. SỬA CHỮ TRÊN TRANG
+---------------------
+Mọi dòng chữ nằm trong data.js, chia theo từng phần (qua, dau, cauChuyen, khoanhKhac, kyNiem,
+loiNhan, cuoi). Trong tiêu đề, chữ đặt giữa hai dấu * hiện bằng font viết tay UTM Zirkon màu hồng,
+ví dụ  tieuDe: ["Rực rỡ", "*theo cách*", "rất riêng."]  (mỗi phần tử là một dòng).
+• Điền tên idol:  tenIdol: "Tên idol",  → hiện ở logo góc trên và tiêu đề tab trình duyệt.
+• Lời nhắn: sửa các đoạn trong loiNhan → doan, và chữ ký ở kyTen.
+
+
+3. THAY / THÊM ẢNH MẪU
+----------------------
+(Muốn KHÁCH tự tải ảnh lên trên điện thoại, không cần sửa file: xem mục 6 và 7.)
+• Thay ảnh: chép ảnh mới đè lên file trong thư mục anh (giữ đúng tên 01.jpg, 02.jpg…).
+  Nên dùng ảnh khoảng 200–400 KB, cạnh dài ~1400 px để trang mở nhanh khi chạm NFC.
+• Thêm ảnh: chép ảnh vào thư mục anh (ví dụ 13.jpg) rồi thêm một dòng vào phần anh của data.js:
+     { src: "anh/13.jpg", chuThich: "Chú thích", viTri: "50% 25%" },
+  (giữa các dòng có dấu phẩy, dòng cuối cùng không cần dấu phẩy).
+• chuThich: chữ dưới ảnh trong bộ sưu tập ("01 / Ánh đèn đỏ").
+• viTri: khi ảnh bị cắt cho vừa khung, giữ lại phần nào. Số thứ hai nhỏ = giữ phần trên (mặt),
+  lớn = giữ phần dưới. Ảnh nào bị cắt mất mặt thì giảm số thứ hai, ví dụ "50% 10%".
+• Ảnh dùng ở đâu: ảnh 1 + 4 đầu trang, ảnh 2 + 3 phần "Khoảnh khắc đáng nhớ", ảnh 8 làm nền
+  lời nhắn, ảnh 5 trong vòng tròn cuối trang; cả 12 ảnh ở bộ sưu tập và cuộn phim.
+
+
+4. LỜI BÀI HÁT — TỰ ĐỘNG
+------------------------
+Trang tự tải lời kèm mốc thời gian từ kho lời LRCLIB (lrclib.net), bản số 18142455 trong data.js
+đã được kiểm tra khớp với file nhạc. Không cần làm gì thêm.
+• Lần đầu mở trang cần có mạng; trang tự thử lại nếu máy chủ lời đang bận, và ghi nhớ lời cho lần sau.
+• Toàn bộ lời hiện sớm hoặc muộn so với giọng hát: sửa lechLoi trong data.js
+  (0.3 = hiện muộn hơn 0,3 giây, -0.3 = hiện sớm hơn).
+• Muốn sửa từng câu, hoặc muốn trang chạy được cả khi không có mạng: mở index.html trên máy tính,
+  kéo xuống chân trang bấm "✎ Chỉnh lời" (chỉ hiện trên máy bạn, khách xem qua mạng không thấy)
+  → "Chỉnh mốc có sẵn" → nghe thử, bấm − / + để chỉnh → "⬇ Tải file loi-bai-hat.js"
+  → chép file tải về (trong thư mục Downloads) đè lên loi-bai-hat.js trong thư mục trang.
+
+
+5. ĐƯA LÊN MẠNG & GẮN VÀO MÓC KHOÁ NFC (miễn phí)
+-------------------------------------------------
+a) Vào https://app.netlify.com/drop, đăng nhập tài khoản (để link không bị xoá).
+b) Kéo thả CẢ THƯ MỤC "trang-idol-gio-thi" (gồm anh, nhac, fonts) vào trang đó → nhận được một đường link.
+c) Đổi tên link cho dễ nhớ: Site configuration → Change site name.
+d) Ghi link vào thẻ NFC của móc khoá bằng ứng dụng ghi NFC trên điện thoại (ví dụ NFC Tools → Write → URL).
+e) Mỗi lần sửa chữ hoặc thay ảnh: vào mục Deploys của site, kéo thả lại cả thư mục. Link giữ nguyên.
+
+Trước khi giao móc khoá, mở thử link trên 1 iPhone và 1 Android (cả khi mở trong Zalo/Messenger),
+nhớ bật âm lượng / tắt chế độ im lặng trên iPhone.
+
+
+6. KHO ẢNH ĐỂ KHÁCH TỰ TẢI ẢNH LÊN (làm 1 lần, ~5 phút — một kho dùng chung cho mọi khách)
+-------------------------------------------------------------------------------------------
+Ảnh khách tải lên được lưu vào Google Drive của BẠN, danh sách ảnh nằm trong một Google Sheet của bạn.
+a) Vào https://sheets.google.com → tạo "Bảng tính trống", đặt tên ví dụ "Kho ảnh trang kỷ niệm".
+   (Tạo bảng tính MỚI, đừng dùng chung bảng tính lời chúc của thiệp Linh Chi.)
+b) Trên menu chọn: Tiện ích mở rộng → Apps Script.
+c) Xoá hết chữ có sẵn trong ô soạn code. Mở file apps-script.gs bằng Notepad, Ctrl+A, Ctrl+C,
+   rồi dán (Ctrl+V) vào ô soạn code → bấm biểu tượng Lưu (hình đĩa mềm).
+d) Ở thanh trên cùng, ô chọn hàm chọn "caiDat" → bấm ▶ "Chạy".
+   Google hỏi cấp quyền: Xem lại quyền → chọn tài khoản → "Nâng cao" → "Đi tới ... (không an toàn)" → "Cho phép".
+   (Đây là code của chính bạn, nó chỉ ghi vào bảng tính này và thư mục "Ảnh trang kỷ niệm" trong Drive của bạn.)
+   Chạy xong, bảng tính có thêm 2 trang tính: "Trang" và "Anh", trong "Trang" có sẵn dòng mẫu
+   gio-thi-01 kèm một mã quản lý 6 số.
+e) Bấm "Triển khai" → "Tùy chọn triển khai mới" → bánh răng cạnh "Chọn loại" → "Ứng dụng web":
+      • Thực thi dưới dạng: Tôi
+      • Người có quyền truy cập: Bất kỳ ai
+   → "Triển khai" → copy "URL ứng dụng web" (dạng https://script.google.com/macros/s/..../exec).
+f) Mở data.js, dán link vào giữa hai dấu ngoặc kép ở dòng apiAnh:
+      apiAnh: "https://script.google.com/macros/s/..../exec",
+g) Kiểm tra: mở link đó trên trình duyệt, thêm đuôi ?trang=gio-thi-01 , thấy {"ok":true,"anh":[]} là xong.
+
+CẬP NHẬT CODE (khi apps-script.gs có bản mới): dán code mới đè vào Apps Script → Lưu →
+Triển khai → Quản lý các bản triển khai → bút chì → Phiên bản: "Phiên bản mới" → Triển khai.
+Làm đúng cách này thì link giữ nguyên, không cần sửa data.js.
+
+
+7. MỖI KHÁCH MỚI (mỗi móc khoá một trang)
+-----------------------------------------
+a) Copy cả thư mục trang ra một thư mục mới cho khách. Trong data.js của bản copy, đổi
+      maTrang: "khach-02",        (chữ không dấu, số, dấu gạch ngang — MỖI KHÁCH MỘT MÃ KHÁC NHAU)
+   apiAnh giữ nguyên link kho ảnh ở mục 6.
+b) Mở Google Sheet kho ảnh → trang tính "Trang" → thêm một dòng:
+      cột Mã trang  = khach-02     (giống hệt maTrang ở trên)
+      cột Mã quản lý = một mã khó đoán, ví dụ 6 số ngẫu nhiên (đây là "mật khẩu" của khách)
+c) Đưa thư mục lên Netlify (mục 5), ghi link vào thẻ NFC.
+d) Gửi cho khách:
+      • Link quản lý ảnh: link trang + /quan-ly.html  (ví dụ https://ten-trang.netlify.app/quan-ly.html)
+        (Ở chân trang chính cũng có dòng "🖼 Chủ trang: thay ảnh" dẫn tới trang này.)
+      • Mã quản lý ở bước b.
+
+Khách làm gì: mở link quản lý → nhập mã → bấm "＋ Thêm ảnh" (chọn được nhiều ảnh một lúc) →
+sửa chú thích, chọn "Giữ phần trên (mặt)" nếu ảnh bị cắt mất mặt, dùng ↑ ↓ đổi thứ tự → "Lưu thay đổi".
+Mở lại trang chính là thấy ảnh mới, KHÔNG cần đăng lại lên Netlify.
+• Khi khách đã có ít nhất 1 ảnh, trang dùng ảnh của khách thay cho bộ ảnh mẫu; khách xoá hết ảnh
+  thì trang quay lại bộ ảnh mẫu. Mỗi trang tối đa 40 ảnh (sửa TOI_DA_ANH trong apps-script.gs nếu cần).
+• Ảnh nằm trong Drive của bạn: thư mục "Ảnh trang kỷ niệm" / <mã trang>. Muốn ẩn một ảnh không phù hợp:
+  gõ x vào cột "Ẩn" ở trang tính "Anh". Đổi mã quản lý của khách: sửa ở trang tính "Trang".
+• Nhập sai mã quá 8 lần trong 15 phút thì trang quản lý của khách đó tạm khoá 15 phút.

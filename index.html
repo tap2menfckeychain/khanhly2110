@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0c0809">
+  <title>Giờ Thì</title>
+  <link rel="preconnect" href="https://lrclib.net" crossorigin>
+  <link rel="preload" href="fonts/utm-zirkon.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/cambria-bold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="bui" class="bui" aria-hidden="true"></canvas>
+  <div class="mang" aria-hidden="true"></div>
+
+  <!-- Màn hộp quà: chạm để mở (nếu trình duyệt cho tự phát nhạc thì quà tự mở) -->
+  <div id="qua" class="qua">
+    <div class="qua-vong" aria-hidden="true"><i></i><i></i><i></i></div>
+    <p class="qua-nhan" id="quaNhan"></p>
+    <button id="hopQua" class="hop" type="button" aria-label="Mở quà">
+      <span class="hop-nap"><i class="no"></i></span>
+      <span class="hop-than"></span>
+    </button>
+    <p class="qua-goi-y" id="quaGoiY"></p>
+  </div>
+
+  <header class="dau-trang">
+    <a class="logo" href="#dau"><b id="logoTen"></b><span>KỶ NIỆM</span></a>
+    <button id="nutLoi" class="nut-loi bat" type="button" aria-pressed="true">Lời</button>
+    <button id="nutNhac" class="nut-nhac" type="button" aria-label="Bật/tắt nhạc">
+      <svg viewBox="0 0 44 44" aria-hidden="true"><circle class="vong-nen" cx="22" cy="22" r="20"/><circle id="vongTien" class="vong-tien" cx="22" cy="22" r="20"/></svg>
+      <i class="dia-nho" aria-hidden="true"></i>
+    </button>
+  </header>
+
+  <main>
+    <!-- Đầu trang -->
+    <section id="dau" class="hero">
+      <div class="hero-chu">
+        <p class="nhan hien" id="dauNhan"></p>
+        <h1 class="tieu-de lon chia" id="dauTieuDe"></h1>
+        <p class="mo-ta hien" id="dauMoTa"></p>
+        <a class="cuon-xuong hien" href="#cau-chuyen">CUỘN XUỐNG <span>↓</span></a>
+      </div>
+      <div class="hero-anh">
+        <figure class="khung-anh khung-chinh lo-ra" data-troi="-0.08"><img id="anhDau1" alt="" fetchpriority="high"></figure>
+        <figure class="the-nho hien" data-troi="0.12" style="--tre: .5s"><img id="anhDau2" alt=""><figcaption>♡</figcaption></figure>
+        <span class="sao-dan" aria-hidden="true">✦</span>
+        <span class="chu-doc" id="chuDoc" aria-hidden="true"></span>
+      </div>
+    </section>
+
+    <!-- Dải chữ chạy -->
+    <div class="dai-chay" aria-hidden="true"><div class="dai-chay-trong" id="daiChay"></div></div>
+
+    <!-- 01 — Câu chuyện -->
+    <section id="cau-chuyen" class="cau-chuyen">
+      <p class="nhan hien" id="ccNhan"></p>
+      <h2 class="tieu-de chia" id="ccTieuDe"></h2>
+      <p class="mo-ta hien" id="ccMoTa"></p>
+    </section>
+
+    <section class="khoanh-khac">
+      <div class="kk-anh">
+        <figure class="khung-anh kk-lon lo-ra" data-troi="-0.05"><img id="anhKk1" alt="" loading="lazy"></figure>
+        <figure class="khung-anh kk-nho lo-ra" data-troi="0.1"><img id="anhKk2" alt="" loading="lazy"></figure>
+      </div>
+      <div class="kk-chu">
+        <p class="nhan hien" id="kkNhan"></p>
+        <h2 class="tieu-de chia" id="kkTieuDe"></h2>
+        <p class="mo-ta hien" id="kkMoTa"></p>
+        <a class="lien-ket hien" href="#ky-niem" id="kkNut"></a>
+      </div>
+    </section>
+
+    <!-- 02 — Kỷ niệm -->
+    <section id="ky-niem" class="ky-niem">
+      <div class="kn-dau">
+        <p class="nhan hien" id="knNhan"></p>
+        <h2 class="tieu-de chia" id="knTieuDe"></h2>
+        <p class="mo-ta hien" id="knMoTa"></p>
+      </div>
+      <div class="kn-luoi" id="knLuoi"></div>
+    </section>
+
+    <!-- Cuộn phim -->
+    <section class="cuon-phim" aria-label="Cuộn phim">
+      <p class="nhan hien" id="cpNhan"></p>
+      <div class="phim-hang"><div class="phim-chay" id="phim1"></div></div>
+      <div class="phim-hang nguoc"><div class="phim-chay" id="phim2"></div></div>
+    </section>
+
+    <!-- 03 — Lời nhắn -->
+    <section class="loi-nhan">
+      <div class="ln-nen" id="lnNen" aria-hidden="true"></div>
+      <p class="nhan hien" id="lnNhan"></p>
+      <h2 class="tieu-de chia" id="lnTieuDe"></h2>
+      <div class="ln-the hien" id="lnThe"></div>
+    </section>
+
+    <!-- Cuối trang -->
+    <section class="cuoi-trang">
+      <div class="anh-tron hien">
+        <svg class="vong-chu" viewBox="0 0 200 200" aria-hidden="true">
+          <defs><path id="duongTron" d="M100 100m-86 0a86 86 0 1 1 172 0a86 86 0 1 1-172 0"/></defs>
+          <text><textPath href="#duongTron" id="chuTron"></textPath></text>
+        </svg>
+        <img id="anhTron" alt="" loading="lazy">
+      </div>
+      <p class="nhan hien" id="ctNhan"></p>
+      <h2 class="tieu-de chia" id="ctTieuDe"></h2>
+      <a class="lien-ket hien" href="#dau" id="ctNut"></a>
+    </section>
+  </main>
+
+  <footer class="chan-trang">
+    <p id="chanTrang"></p>
+    <p class="ql-link" id="qlLink" hidden><a href="quan-ly.html">🖼 Chủ trang: thay ảnh</a></p>
+    <p class="mo-soan" id="moSoan" hidden><a href="#soan-loi">✎ Chỉnh lời</a> <span id="nguonLoi"></span> <button id="xoaLoiTam" type="button" hidden>Xoá lời tạm</button></p>
+  </footer>
+
+  <!-- Lời bài hát bay vào từ mép phải, nằm ở mép dưới màn hình -->
+  <div class="bong-day" aria-hidden="true"></div>
+  <div id="loiBay" class="loi-bay" aria-live="polite">
+    <div class="o-loi" id="oLoi"></div>
+  </div>
+  <!-- Mép phải: tên bài + vạch chạy theo nhạc -->
+  <div class="rin-phai" aria-hidden="true">
+    <span id="rinChu"></span>
+    <i class="rin-vach"><b id="rinTien"></b></i>
+  </div>
+
+  <!-- Xem ảnh lớn -->
+  <div id="xemAnh" class="xem-anh" hidden>
+    <button class="xa-dong" id="xaDong" type="button" aria-label="Đóng">✕</button>
+    <button class="xa-nut truoc" id="xaTruoc" type="button" aria-label="Ảnh trước">‹</button>
+    <figure><img id="xaImg" alt=""><figcaption id="xaChu"></figcaption></figure>
+    <button class="xa-nut sau" id="xaSau" type="button" aria-label="Ảnh sau">›</button>
+  </div>
+
+  <!-- Trình chỉnh lời: mở bằng nút "✎ Chỉnh lời" ở chân trang (đuôi #soan-loi) -->
+  <div id="soan" class="soan" hidden>
+    <div class="s-hop">
+      <div class="s-dau">
+        <h2>Chỉnh lời bài hát</h2>
+        <button id="soanDong" class="s-nut" type="button">✕ Đóng</button>
+      </div>
+
+      <section id="soanNhap">
+        <p class="s-mo-ta">Lời tự tải đã có sẵn mốc thời gian ở ô dưới. Bấm <b>“Chỉnh mốc có sẵn”</b> để nghe thử, chỉnh câu lệch,
+          hoặc tải về thành file <b>loi-bai-hat.js</b> để trang chạy được cả khi không có mạng.
+          Muốn tự canh lại từ đầu: dán lời (mỗi câu một dòng) rồi bấm “Canh lời lại từ đầu”.</p>
+        <textarea id="soanChu" rows="14" spellcheck="false" placeholder="Đang tải lời…"></textarea>
+        <div class="s-hang">
+          <button id="soanGiuMoc" class="s-nut chinh" type="button">Chỉnh mốc có sẵn →</button>
+          <button id="soanBatDau" class="s-nut" type="button">Canh lời lại từ đầu ▶</button>
+        </div>
+        <p class="s-bao" id="soanNhapBao"></p>
+      </section>
+
+      <section id="soanCanh" hidden>
+        <p class="s-mo-ta">Nhạc đang chạy từ đầu. Mỗi khi ca sĩ <b>bắt đầu</b> hát câu đang hiện, chạm nút lớn (hoặc phím Cách).
+          Đến đoạn nhạc dạo không lời mà muốn ẩn lời đi thì bấm “Nhạc dạo”.</p>
+        <div class="s-tren"><span id="sGio">0:00</span><span id="sDem"></span></div>
+        <p class="s-truoc" id="sTruoc"></p>
+        <p class="s-nhan">Câu sắp hát:</p>
+        <p class="s-toi" id="sToi"></p>
+        <p class="s-sau" id="sSau"></p>
+        <button id="soanBam" class="s-bam" type="button">CHẠM khi ca sĩ bắt đầu hát câu này<small>hoặc bấm phím Cách (Space)</small></button>
+        <div class="s-hang">
+          <button id="soanNghi" class="s-nut" type="button">♪ Nhạc dạo — ẩn lời <kbd>N</kbd></button>
+          <button id="soanLui" class="s-nut" type="button">↶ Làm lại câu trước <kbd>⌫</kbd></button>
+          <button id="soanXong" class="s-nut chinh" type="button">Xong → kiểm tra</button>
+        </div>
+      </section>
+
+      <section id="soanSua" hidden>
+        <p class="s-mo-ta">Nghe lại để kiểm tra, dòng đang hát sẽ sáng lên. Câu nào hiện sớm hay muộn thì bấm − / + (mỗi lần 0,1 giây) hoặc gõ thẳng thời gian.</p>
+        <div class="s-xem"><span id="sXemGio">0:00</span><span id="sXem">—</span></div>
+        <div class="s-hang">
+          <button id="soanNgheDau" class="s-nut" type="button">▶ Nghe từ đầu</button>
+          <button id="soanTam" class="s-nut" type="button">❚❚ Dừng</button>
+          <button class="s-nut" type="button" data-lech="-0.1">Cả bài sớm hơn 0,1s</button>
+          <button class="s-nut" type="button" data-lech="0.1">Cả bài muộn hơn 0,1s</button>
+        </div>
+        <ol id="soanDs" class="s-ds"></ol>
+        <div class="s-hang">
+          <button id="soanXem" class="s-nut chinh" type="button">Xem thử trên trang ▶</button>
+          <button id="soanTai" class="s-nut" type="button">⬇ Tải file loi-bai-hat.js</button>
+          <button id="soanChep" class="s-nut" type="button">⧉ Sao chép lời (LRC)</button>
+          <button id="soanLai" class="s-nut" type="button">↺ Canh lại từ đầu</button>
+        </div>
+        <p class="s-bao" id="soanBao"></p>
+      </section>
+    </div>
+  </div>
+
+  <audio id="nhac" preload="auto" loop></audio>
+
+  <script src="data.js"></script>
+  <script src="loi-bai-hat.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
